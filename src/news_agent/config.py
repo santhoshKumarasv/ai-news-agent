@@ -28,7 +28,8 @@ class Settings(BaseSettings):
     model: str = "claude-opus-4-8"
     max_turns: int = 12
     default_topic: str = "Data & AI"
-    output_dir: str = "digests"
+    output_dir: str = "~/news-digests"
+    output_format: str = "txt"
 
 
 def load_settings(**overrides: object) -> Settings:

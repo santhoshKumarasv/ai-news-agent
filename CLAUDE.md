@@ -28,8 +28,9 @@ Built on the Claude Agent SDK (Python).
   - `prompts.py`        - system prompt + prompt template
   - `agent.py`          - Claude Agent SDK query loop
   - `models.py`         - `Digest` dataclass (the produced artifact)
-  - `output.py`         - render a `Digest` to Markdown (pure, tested)
-  - `delivery/`         - where a digest goes: `Sink` ABC + `FileSink`;
+  - `output.py`         - render a `Digest` to text/Markdown (pure, tested)
+  - `delivery/`         - where a digest goes: `Sink` ABC, `TextFileSink`
+                          (.txt) and `FileSink` (.md), and a `SINKS` registry;
                           add an Outlook/Graph sink here for Phase 2
 - `tests/`              - pytest unit tests for the pure modules
 - `pyproject.toml`      - deps + tooling config (source of truth)
@@ -49,11 +50,15 @@ Built on the Claude Agent SDK (Python).
     python -m news_agent "AI policy"           # optional focus
     news-digest "AI policy"                     # installed script form
     news-digest --no-save                       # print only, don't write a file
+    news-digest --format md                     # save Markdown instead of .txt
     news-digest --output-dir out --max-turns 8  # override config per run
     news-digest --help                          # all flags
 
-Flags (`--output-dir`, `--model`, `--max-turns`, `--no-save`) override the
-`config.py` defaults for a single run; parsing lives in `cli.py`.
+By default a run saves a timestamped plain-text file (e.g.
+`2026-06-29_2031-40-data-ai.txt`) to `~/news-digests` for easy local
+verification before email delivery exists. Flags (`--output-dir`, `--format`,
+`--model`, `--max-turns`, `--no-save`) override the `config.py` defaults for a
+single run; parsing lives in `cli.py`.
 
 ## Dev workflow
     .venv/bin/ruff check .       # lint

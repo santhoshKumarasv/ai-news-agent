@@ -25,6 +25,7 @@ class RunOptions:
 
     topic: str
     output_dir: str
+    output_format: str
     model: str
     max_turns: int
     save: bool
@@ -47,6 +48,12 @@ def build_parser(settings: Settings) -> argparse.ArgumentParser:
         "--output-dir",
         default=settings.output_dir,
         help=f"directory for saved digests (default: {settings.output_dir})",
+    )
+    parser.add_argument(
+        "--format",
+        choices=("txt", "md"),
+        default=settings.output_format,
+        help=f"saved file format (default: {settings.output_format})",
     )
     parser.add_argument(
         "--model",
@@ -74,6 +81,7 @@ def parse_args(argv: Sequence[str], settings: Settings) -> RunOptions:
     return RunOptions(
         topic=parse_topic(ns.focus, settings.default_topic),
         output_dir=ns.output_dir,
+        output_format=ns.format,
         model=ns.model,
         max_turns=ns.max_turns,
         save=not ns.no_save,
