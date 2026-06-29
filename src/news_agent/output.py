@@ -1,10 +1,13 @@
-"""Render and persist a digest to a local Markdown file (Phase 1 delivery)."""
+"""Render a :class:`~news_agent.models.Digest` to Markdown.
+
+Pure rendering only - no file IO. Persisting/sending lives in ``delivery/``.
+"""
 
 from __future__ import annotations
 
 import re
-from datetime import datetime
-from pathlib import Path
+
+from .models import Digest
 
 _SLUG_STRIP = re.compile(r"[^a-z0-9]+")
 
@@ -16,32 +19,17 @@ def slugify(text: str) -> str:
     return slug or "digest"
 
 
-def digest_filename(topic: str, generated_at: datetime) -> str:
+def digest_filename(digest: Digest) -> str:
     """Dated, slugged filename, e.g. ``2026-06-29-ai-policy.md``."""
 
-    return f"{generated_at:%Y-%m-%d}-{slugify(topic)}.md"
+    return f"{digest.generated_at:%Y-%m-%d}-{slugify(digest.topic)}.md"
 
 
-def format_digest(topic: str, body: str, generated_at: datetime) -> str:
-    """Wrap the agent's output in a titled, timestamped Markdown document."""
+def render_markdown(digest: Digest) -> str:
+    """Wrap the digest body in a titled, timestamped Markdown document."""
 
     return (
-        f"# News Digest: {topic}\n\n"
-        f"_Generated {generated_at:%Y-%m-%d %H:%M}_\n\n"
-        f"{body.strip()}\n"
+        f"# News Digest: {digest.topic}\n\n"
+        f"_Generated {digest.generated_at:%Y-%m-%d %H:%M}_\n\n"
+        f"{digest.body.strip()}\n"
     )
-
-
-def write_digest(
-    topic: str,
-    body: str,
-    generated_at: datetime,
-    output_dir: str | Path,
-) -> Path:
-    """Format and write the digest under ``output_dir``; return the file path."""
-
-    out_dir = Path(output_dir)
-    out_dir.mkdir(parents=True, exist_ok=True)
-    path = out_dir / digest_filename(topic, generated_at)
-    path.write_text(format_digest(topic, body, generated_at), encoding="utf-8")
-    return path

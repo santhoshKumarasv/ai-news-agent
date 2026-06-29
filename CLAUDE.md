@@ -27,7 +27,10 @@ Built on the Claude Agent SDK (Python).
   - `config.py`         - settings via pydantic-settings (env / `.env`)
   - `prompts.py`        - system prompt + prompt template
   - `agent.py`          - Claude Agent SDK query loop
-  - `output.py`         - render + write the Markdown digest (pure, tested)
+  - `models.py`         - `Digest` dataclass (the produced artifact)
+  - `output.py`         - render a `Digest` to Markdown (pure, tested)
+  - `delivery/`         - where a digest goes: `Sink` ABC + `FileSink`;
+                          add an Outlook/Graph sink here for Phase 2
 - `tests/`              - pytest unit tests for the pure modules
 - `pyproject.toml`      - deps + tooling config (source of truth)
 - `requirements.txt`    - pinned lockfile (generated via `pip freeze`)
