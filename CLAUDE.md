@@ -58,9 +58,10 @@ Built on the Claude Agent SDK (Python).
   use them. Freshness comes from live web search, NOT the model's training data
   - don't "fix" date wording in the prompt by assuming the model knows today.
 - `max_turns` bounds the agentic loop to control cost (currently 12).
-- Output is streamed: each `TextBlock` in an `AssistantMessage` is printed as it
-  arrives; a `ResultMessage` signals completion. `build_digest()` also returns
-  the full text so `output.py` can persist it.
+- Output is streamed: every `TextBlock` is printed live (including between-tool
+  narration) so the user sees progress, but `build_digest()` returns only
+  `ResultMessage.result` - the final digest - so saved files don't contain the
+  intermediate narration. The run cost is printed from `total_cost_usd`.
 - Model is `claude-opus-4-8`, set in `config.py` (`Settings.model`).
 
 ## Conventions
