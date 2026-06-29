@@ -14,7 +14,7 @@ def test_defaults_applied():
     settings = Settings(_env_file=None, anthropic_api_key="test-key")
     assert settings.model == "claude-opus-4-8"
     assert settings.max_turns == 12
-    assert settings.default_topic == "technology"
+    assert settings.default_topic == "Data & AI"
     assert settings.output_dir == "digests"
 
 

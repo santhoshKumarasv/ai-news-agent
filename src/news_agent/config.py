@@ -27,7 +27,7 @@ class Settings(BaseSettings):
     # Tunables (override via env or .env).
     model: str = "claude-opus-4-8"
     max_turns: int = 12
-    default_topic: str = "technology"
+    default_topic: str = "Data & AI"
     output_dir: str = "digests"
 
 

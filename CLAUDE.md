@@ -7,10 +7,11 @@ A personal news-research agent that finds the top Data & AI developments
 worldwide, selects the most significant items, and produces a daily digest.
 Built on the Claude Agent SDK (Python).
 
-> Note: the current code is the single-agent starting point — it takes a topic
-> (default `"technology"`), uses live web search, prints a 3-5 bullet sourced
-> digest, and writes it to a dated Markdown file under `digests/`. The "top 10
-> Data & AI, daily" shape is the target; align changes toward it.
+> Note: the current code is the single-agent version — it produces a ranked
+> top-10 Data & AI digest via live web search and writes it to a dated Markdown
+> file under `digests/`. The CLI argument is an optional *focus* that narrows
+> within Data & AI (default: the whole field). Next milestones are email
+> delivery (Phase 2) and subagent decomposition for deeper curation.
 
 ## Roadmap (phase-gated)
 - [x] Phase 1: Manual run -> digest written to a local Markdown file
