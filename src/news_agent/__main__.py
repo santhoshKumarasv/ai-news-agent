@@ -9,7 +9,7 @@ from datetime import datetime
 from .agent import build_digest
 from .cli import parse_args
 from .config import load_settings
-from .delivery import FileSink
+from .delivery import SINKS
 from .models import Digest
 
 
@@ -29,7 +29,8 @@ def main() -> None:
         print("\n(--no-save: digest not written to disk)")
         return
 
-    location = FileSink(opts.output_dir).deliver(digest)
+    sink = SINKS[opts.output_format](opts.output_dir)
+    location = sink.deliver(digest)
     print(f"\nSaved digest to {location}")
 
 

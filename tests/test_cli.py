@@ -40,10 +40,15 @@ def test_parse_args_defaults(settings):
     assert opts == RunOptions(
         topic=settings.default_topic,
         output_dir=settings.output_dir,
+        output_format=settings.output_format,
         model=settings.model,
         max_turns=settings.max_turns,
         save=True,
     )
+
+
+def test_parse_args_format_override(settings):
+    assert parse_args(["--format", "md"], settings).output_format == "md"
 
 
 def test_parse_args_focus(settings):

@@ -15,7 +15,8 @@ def test_defaults_applied():
     assert settings.model == "claude-opus-4-8"
     assert settings.max_turns == 12
     assert settings.default_topic == "Data & AI"
-    assert settings.output_dir == "digests"
+    assert settings.output_dir == "~/news-digests"
+    assert settings.output_format == "txt"
 
 
 def test_env_overrides(monkeypatch):
