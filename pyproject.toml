@@ -1,0 +1,44 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "news-agent"
+version = "0.1.0"
+description = "Personal AI & Data news digest agent built on the Claude Agent SDK"
+requires-python = ">=3.12"
+dependencies = [
+    "claude-agent-sdk>=0.2.110",
+    "python-dotenv>=1.2.2",
+    "pydantic-settings>=2.14.2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+    "pytest-asyncio>=0.24",
+    "ruff>=0.6",
+    "mypy>=1.11",
+]
+
+[project.scripts]
+news-digest = "news_agent.__main__:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/news_agent"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "W"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true
+warn_unused_ignores = true
