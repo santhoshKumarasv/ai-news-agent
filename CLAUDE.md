@@ -42,10 +42,15 @@ Built on the Claude Agent SDK (Python).
 
 ## How to run
     source .venv/bin/activate
-    python -m news_agent "AI policy"   # specific topic
-    python -m news_agent               # defaults to "technology"
-    # or, via the installed script:
-    news-digest "AI policy"
+    python -m news_agent                       # full Data & AI top-10
+    python -m news_agent "AI policy"           # optional focus
+    news-digest "AI policy"                     # installed script form
+    news-digest --no-save                       # print only, don't write a file
+    news-digest --output-dir out --max-turns 8  # override config per run
+    news-digest --help                          # all flags
+
+Flags (`--output-dir`, `--model`, `--max-turns`, `--no-save`) override the
+`config.py` defaults for a single run; parsing lives in `cli.py`.
 
 ## Dev workflow
     .venv/bin/ruff check .       # lint
