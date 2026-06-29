@@ -9,7 +9,8 @@ from datetime import datetime
 from .agent import build_digest
 from .cli import parse_args
 from .config import load_settings
-from .output import write_digest
+from .delivery import FileSink
+from .models import Digest
 
 
 def main() -> None:
@@ -22,13 +23,14 @@ def main() -> None:
     )
 
     body = asyncio.run(build_digest(opts.topic, run_settings))
+    digest = Digest(topic=opts.topic, body=body, generated_at=datetime.now())
 
     if not opts.save:
         print("\n(--no-save: digest not written to disk)")
         return
 
-    path = write_digest(opts.topic, body, datetime.now(), opts.output_dir)
-    print(f"\nSaved digest to {path}")
+    location = FileSink(opts.output_dir).deliver(digest)
+    print(f"\nSaved digest to {location}")
 
 
 if __name__ == "__main__":
