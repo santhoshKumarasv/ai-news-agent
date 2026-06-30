@@ -24,12 +24,16 @@ class Settings(BaseSettings):
     # Required: the Claude Agent SDK authenticates with this.
     anthropic_api_key: str
 
+    # Optional: OpenAI key for gpt-image-2 LinkedIn poster generation.
+    openai_api_key: str | None = None
+
     # Tunables (override via env or .env).
     model: str = "claude-opus-4-8"
     max_turns: int = 12
     default_topic: str = "Data & AI"
     output_dir: str = "~/news-digests"
     output_format: str = "txt"
+    image_model: str = "gpt-image-2"
 
 
 def load_settings(**overrides: object) -> Settings:
@@ -42,4 +46,6 @@ def load_settings(**overrides: object) -> Settings:
 
     settings = Settings(**overrides)  # type: ignore[arg-type]
     os.environ.setdefault("ANTHROPIC_API_KEY", settings.anthropic_api_key)
+    if settings.openai_api_key:
+        os.environ.setdefault("OPENAI_API_KEY", settings.openai_api_key)
     return settings
