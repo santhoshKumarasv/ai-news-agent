@@ -3,15 +3,26 @@
 Guidance for Claude Code when working in this repository.
 
 ## What this is
-A personal news-research agent that finds the top Data & AI developments
-worldwide, selects the most significant items, and produces a daily digest.
-Built on the Claude Agent SDK (Python).
+A weekly Data & AI news-intelligence agent for **Sugansa Solutions** (a Data &
+AI services company: Data Engineering, AI Architecture, Modern Data Platforms,
+Agentic AI). Each run searches the web for the previous week's most important,
+in-scope developments and produces a brief that positions Sugansa as a thought
+leader for business/technology/data/AI leaders and enterprise transformation
+teams. Built on the Claude Agent SDK (Python).
 
-> Note: the current code is the single-agent version — it produces a ranked
-> top-10 Data & AI digest via live web search and writes it to a dated Markdown
-> file under `digests/`. The CLI argument is an optional *focus* that narrows
-> within Data & AI (default: the whole field). Next milestones are email
-> delivery (Phase 2) and subagent decomposition for deeper curation.
+> Note: the current code produces **PART 1** only - a "Weekly News Intelligence
+> Summary" of 5-7 items, each with headline, source, summary, why-it-matters
+> for Sugansa, relevance area, and a suggested LinkedIn angle (defined in
+> `prompts.py`). It writes a timestamped `.txt` to `~/news-digests` for local
+> verification. The CLI argument is an optional *focus* that narrows within the
+> Sugansa scope (default: the full scope).
+>
+> Deferred / planned:
+> - **PART 2** - a ready-to-post LinkedIn post (~250-350 words, branded
+>   hashtags, soft CTA) synthesised from PART 1.
+> - **Poster** - a 1200x1200 image styled to sample posters (needs an image
+>   model + the user's samples; not the text agent).
+> - Weekly **Sunday-evening scheduling** and **email delivery** (new `Sink`).
 
 ## Roadmap (phase-gated)
 - [x] Phase 1: Manual run -> digest written to a local Markdown file
