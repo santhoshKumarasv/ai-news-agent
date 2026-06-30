@@ -11,6 +11,8 @@ dependencies = [
     "claude-agent-sdk>=0.2.110",
     "python-dotenv>=1.2.2",
     "pydantic-settings>=2.14.2",
+    "openai>=1.40",
+    "pillow>=10.0",
 ]
 
 [project.optional-dependencies]

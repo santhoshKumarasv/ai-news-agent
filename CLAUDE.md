@@ -17,11 +17,14 @@ teams. Built on the Claude Agent SDK (Python).
 > verification. The CLI argument is an optional *focus* that narrows within the
 > Sugansa scope (default: the full scope).
 >
+> PART 2 (LinkedIn): the `linkedin/` package generates a 1200x1200 poster from
+> a post via **OpenAI gpt-image-2** (full poster), then overlays the REAL
+> Sugansa logo for guaranteed brand accuracy; hashtags are kept off the poster.
+> Needs `OPENAI_API_KEY`. See "LinkedIn posters" below.
+>
 > Deferred / planned:
-> - **PART 2** - a ready-to-post LinkedIn post (~250-350 words, branded
->   hashtags, soft CTA) synthesised from PART 1.
-> - **Poster** - a 1200x1200 image styled to sample posters (needs an image
->   model + the user's samples; not the text agent).
+> - The **Mon-Fri pipeline**: weekly brief -> 5 daily posts (post text + poster)
+>   into `~/sugansa-linkedin/Week-.../<date>-<Day>/`.
 > - Weekly **Sunday-evening scheduling** and **email delivery** (new `Sink`).
 
 ## Roadmap (phase-gated)
@@ -43,6 +46,8 @@ teams. Built on the Claude Agent SDK (Python).
   - `delivery/`         - where a digest goes: `Sink` ABC, `TextFileSink`
                           (.txt) and `FileSink` (.md), and a `SINKS` registry;
                           add an Outlook/Graph sink here for Phase 2
+  - `linkedin/`         - `poster.py`: gpt-image-2 poster generation +
+                          real-logo overlay (Pillow). See "LinkedIn posters".
 - `tests/`              - pytest unit tests for the pure modules
 - `pyproject.toml`      - deps + tooling config (source of truth)
 - `requirements.txt`    - pinned lockfile (generated via `pip freeze`)
@@ -87,6 +92,21 @@ single run; parsing lives in `cli.py`.
   `ResultMessage.result` - the final digest - so saved files don't contain the
   intermediate narration. The run cost is printed from `total_cost_usd`.
 - Model is `claude-opus-4-8`, set in `config.py` (`Settings.model`).
+
+## LinkedIn posters (PART 2)
+- `linkedin/poster.py` `generate_poster(post, out)` sends the LinkedIn post to
+  **OpenAI gpt-image-2** (`config.image_model`), which renders the WHOLE
+  1200x1200 poster (visual + text). gpt-image-2 renders long text reliably -
+  this is why the earlier HTML/SVG and hybrid approaches were dropped.
+- The prompt forbids hashtags on the poster and tells the model NOT to draw a
+  logo, reserving a clean top band. We then overlay the REAL Sugansa logo
+  (recoloured white for the dark poster) with Pillow - the brand mark is always
+  exact, never AI-approximated. Brand assets live in `~/sugansa-linkedin/brand/`
+  (`sugansa-icon.png`, `sugansa-horizontal-mono-indigo.png`); see the
+  `sugansa-brand` memory for colours/fonts/logo rules.
+- Needs `OPENAI_API_KEY` (optional in `config.py`). Each gpt-image-2 image
+  costs money - generate deliberately. Eyeball each poster: the model can still
+  occasionally misspell a small label.
 
 ## Conventions
 - Python 3.12, Claude Agent SDK (`claude-agent-sdk`).
